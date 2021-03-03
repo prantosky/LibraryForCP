@@ -5,7 +5,7 @@
 namespace Math {
 	template <typename T,
 			  std::enable_if_t<std::is_integral<T>::value, bool> = true>
-	static long pow_mod(T radix, int exponent, const T mod) {
+	long pow_mod(T radix, int exponent, const T mod) {
 		if (exponent < 0) {
 			throw std::invalid_argument(
 				"math::pow_mod: pow_mod will misbehave for negative values of "
@@ -27,7 +27,7 @@ namespace Math {
 
 	template <typename T,
 			  std::enable_if_t<std::is_integral<T>::value, bool> = true>
-	static long pow(T radix, int exponent) {
+	long pow(T radix, int exponent) {
 		long base = radix;
 		long result = 1;
 		while (exponent != 0) {
@@ -43,7 +43,7 @@ namespace Math {
 
 	template <typename T,
 			  std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
-	static double pow(T radix, int exponent) {
+	double pow(T radix, int exponent) {
 		double base = radix;
 		double result = 1;
 		while (exponent != 0) {
@@ -58,5 +58,3 @@ namespace Math {
 	}
 
 }  // namespace Math
-
-namespace primes {}
