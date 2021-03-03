@@ -1,1 +1,1 @@
-# Library
+# Library for Competetive Programming
