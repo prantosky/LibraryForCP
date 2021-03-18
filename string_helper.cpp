@@ -24,4 +24,26 @@ namespace string_helper {
 			std::sregex_token_iterator(), std::back_inserter(results));
 		return results;
 	}
+	//check whether string s is subsequqence of string t or not 
+	std::bool isSubsequence(const string s,const  string t) {
+        int i=0;
+        int j=0;
+        int found = 0;
+        while(i<s.size()&& j<t.size()){
+            if(s[i]==t[j]){
+                found++;
+                i++;
+                j++;
+            }
+            else{
+                j++;
+            }
+        }
+        if(found == s.size()){
+            return true;
+        }
+        else{
+            return false;
+        }
+	
 }  // namespace string_helper
