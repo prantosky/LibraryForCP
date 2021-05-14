@@ -45,4 +45,48 @@ namespace string_helper {
 			return false;
 		}
 	}
+
+	// Returns the starting index of the pattern in the string,
+	// else returns string::npos
+	size_t kmp(const std::string& text, const std::string& pattern) {
+		if (text.empty() or text.length() < pattern.length())
+			return std::string::npos;
+		if (pattern.empty()) return 0;
+		// Compute vector to maintain size of suffix which is same as prefix
+		std::vector<int> lps(pattern.length(), 0);
+		size_t index = 0;
+		for (size_t j = 1; j < pattern.length();) {
+			if (pattern.at(index) == pattern.at(j)) {
+				lps[j] = index + 1;
+				++index;
+				++j;
+			} else {
+				if (index != 0) {
+					index = lps[index - 1];
+				} else {
+					lps[j] = 0;
+					++j;
+				}
+			}
+		}
+
+		// Do the actual mattern matching using the computed array
+		size_t index_text = 0, index_pattern = 0;
+		while (index_text < text.length() and
+			   index_pattern < pattern.length()) {
+			if (text.at(index_text) == pattern.at(index_pattern)) {
+				++index_pattern;
+				++index_text;
+			} else {
+				if (index_pattern != 0) {
+					index_pattern = lps.at(index_pattern - 1);
+				} else {
+					index_text++;
+				}
+			}
+			if (index_pattern == pattern.length())
+				return index_text - pattern.size();
+		}
+		return std::string::npos;
+	}
 }  // namespace string_helper
