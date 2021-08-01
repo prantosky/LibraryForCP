@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstddef>
 #include <type_traits>
 #include <vector>
 
@@ -53,15 +54,15 @@ namespace math {
 
 namespace prime {
 
-	std::vector<int> first_n_primes(const size_t n) {
+	std::vector<std::size_t> first_n_primes(const std::size_t n) {
 		if (n == 0) return {};
 		if (n == 1) return {2};
 
-		std::vector<int> primes({2, 3});
+		std::vector<size_t> primes({2, 3});
 		primes.reserve(n);
 
-		size_t i = 2;
-		size_t candidate = 5;
+		std::size_t i = 2;
+		std::size_t candidate = 5;
 		bool is_prime = false;
 
 		while (i < n) {
@@ -83,18 +84,15 @@ namespace prime {
 		return primes;
 	}
 
-	void generate_next_primes(std::vector<int>& primes,
-							  const size_t count = 2) {
+	void generate_next_primes(std::vector<std::size_t>& primes,
+							  const std::size_t count = 2) {
 		if (primes.empty()) {
 			primes = prime::first_n_primes(count);
-			return;
-		} else if (primes.size() == 1) {
-			primes = prime::first_n_primes(count - 1);
 			return;
 		}
 
 		size_t i = 0;
-		size_t candidate = *primes.rbegin() + 2;
+		size_t candidate = primes.back() + 2;
 		bool is_prime = false;
 
 		while (i < count) {
@@ -115,12 +113,14 @@ namespace prime {
 		}
 	}
 
-	bool is_prime(std::vector<int>& primes, const int num, const int step = 2) {
+	bool is_prime(std::vector<size_t>& primes, const size_t num,
+				  const int step = 2) {
+		if (num <= 2) return num == 2;
 		if (primes.empty()) {
 			primes = prime::first_n_primes(step);
 		}
 		long sqrt = std::ceil(std::sqrt(num));
-		while (sqrt > *primes.rbegin()) {
+		while (sqrt > primes.back()) {
 			prime::generate_next_primes(primes, step);
 		}
 		for (auto& prime : primes) {
