@@ -25,26 +25,6 @@ namespace string_helper {
 			std::sregex_token_iterator(), std::back_inserter(results));
 		return results;
 	}
-	// check whether string s is subsequqence of string t or not
-	bool isSubsequence(const std::string& s, const std::string& t) {
-		int i = 0;
-		int j = 0;
-		int found = 0;
-		while (i < s.size() && j < t.size()) {
-			if (s[i] == t[j]) {
-				found++;
-				i++;
-				j++;
-			} else {
-				j++;
-			}
-		}
-		if (found == s.size()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	// Returns the starting index of the pattern in the string,
 	// else returns string::npos
