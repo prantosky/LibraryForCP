@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstddef>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -29,13 +30,15 @@ namespace string_helper {
 	// Returns the starting index of the pattern in the string,
 	// else returns string::npos
 	std::size_t kmp(const std::string& text, const std::string& pattern,
-					int index = 0) {
+					std::size_t index_text = 0) {
 		if (text.empty() or text.length() < pattern.length())
 			return std::string::npos;
+
 		if (pattern.empty()) return 0;
 		// Compute vector to maintain size of suffix which is same as prefix
-		std::vector<int> lps(pattern.length(), 0);
+		std::vector<int> lps(pattern.length());
 
+		std::size_t index = 0;
 		for (std::size_t j = 1; j < pattern.length();) {
 			if (pattern.at(index) == pattern.at(j)) {
 				lps[j] = index + 1;
@@ -51,8 +54,8 @@ namespace string_helper {
 			}
 		}
 
-		// Do the actual mattern matching using the computed array
-		std::size_t index_text = 0, index_pattern = 0;
+		// Do the actual pattern matching using the computed array
+		std::size_t index_pattern = 0;
 		while (index_text < text.length() and
 			   index_pattern < pattern.length()) {
 			if (text.at(index_text) == pattern.at(index_pattern)) {
