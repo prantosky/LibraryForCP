@@ -28,13 +28,14 @@ namespace string_helper {
 
 	// Returns the starting index of the pattern in the string,
 	// else returns string::npos
-	std::size_t kmp(const std::string& text, const std::string& pattern) {
+	std::size_t kmp(const std::string& text, const std::string& pattern,
+					int index = 0) {
 		if (text.empty() or text.length() < pattern.length())
 			return std::string::npos;
 		if (pattern.empty()) return 0;
 		// Compute vector to maintain size of suffix which is same as prefix
 		std::vector<int> lps(pattern.length(), 0);
-		std::size_t index = 0;
+
 		for (std::size_t j = 1; j < pattern.length();) {
 			if (pattern.at(index) == pattern.at(j)) {
 				lps[j] = index + 1;
