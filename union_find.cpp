@@ -9,9 +9,8 @@ class union_find {
  public:
 	union_find(int node_count) {
 		nodes.assign(node_count, 0);
-		rank.assign(node_count, 0);
+		rank.assign(node_count, 1);
 		std::iota(nodes.begin(), nodes.end(), 0);
-		std::iota(rank.begin(), rank.end(), 0);
 	}
 
 	int root(int i) {
@@ -36,4 +35,5 @@ class union_find {
 			rank[i] += rank[j];
 		}
 	}
+	int get_rank(int i) { return rank[i]; }
 };
